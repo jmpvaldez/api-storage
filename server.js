@@ -62,7 +62,7 @@ app.put("/api/:id", async (req, res) => {
 app.get("/api/:method", async (req, res) => {
   try {
     const { method } = req.params;
-    const api = await Apis.find({ busno: method });
+    const api = await Apis.find({ method: method });
 
     if (api.length === 0) {
       return res
