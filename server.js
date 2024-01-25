@@ -69,10 +69,10 @@ app.put("/api/:id", async (req, res) => {
 
 
 //search
-app.get("/api/:method", async (req, res) => {
+app.get("/api/:systemname", async (req, res) => {
   try {
-    const { method } = req.params;
-    const api = await Apis.find({ method: method });
+    const { systemname } = req.params;
+    const api = await Apis.find({ systemname: systemname });
 
     if (api.length === 0) {
       return res
