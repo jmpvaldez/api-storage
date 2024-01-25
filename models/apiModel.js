@@ -14,6 +14,10 @@ const apiSchema = mongoose.Schema(
       type: String,
       required: [true, "Please endpoint"],
     },
+    systemname: {
+      type: String,
+      required: [true, "Please System name"],
+    },
    
   },
   {
