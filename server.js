@@ -1,14 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Apis = require("./models/apiModel");
+const cors = require('cors');
+
 
 const cookieParser = require("cookie-parser");
 
 const app = express();
-
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors({
+  origin: 'http://127.0.0.1:8000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
+
+
 
 //default route
 app.get("/", (req, res) => {
@@ -68,6 +78,24 @@ app.get("/api/:method", async (req, res) => {
       return res
         .status(404)
         .json({ message: "No Api method matching records found" });
+    }
+
+    res.status(200).json(api);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+app.get("/api/:description", async (req, res) => {
+  try {
+    const { description } = req.params;
+    const api = await Apis.find({ description: description });
+
+    if (api.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No Api description matching records found" });
     }
 
     res.status(200).json(api);
